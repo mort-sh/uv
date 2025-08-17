@@ -1,5 +1,5 @@
 [project]
-name = "cookiecutter-uv"
+name = "uv"
 version = "0.0.1"
 description = "A python cookiecutter application to create a new python project that uses uv to manage its dependencies."
 authors = [{ name = "Florian Maas", email = "fpgmaas@gmail.com" }]
@@ -26,9 +26,9 @@ classifiers = [
 
 
 [project.urls]
-Repository = "https://github.com/fpgmaas/cookiecutter-uv"
+Repository = "https://github.com/mort-sh/uv"
 Documentation = "https://fpgmaas.github.io/cookiecutter-uv/"
-Homepage = "https://fpgmaas.github.io/cookiecutter-uv/"
+Homepage = "https://mort-sh.github.io/uv/"
 
 [dependency-groups]
 dev = [
