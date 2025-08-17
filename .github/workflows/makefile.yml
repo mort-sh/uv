@@ -1,4 +1,4 @@
-name: Makefile CI
+name: Test Cookiecutter Template
 
 on:
   push:
@@ -7,21 +7,41 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  test-cookiecutter:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Check out
+      uses: actions/checkout@v4
 
-    - name: configure
-      run: ./configure
+    - name: Set up the environment
+      uses: ./.github/actions/setup-python-env
 
-    - name: Install dependencies
-      run: make
+    - name: Test cookiecutter template generation
+      run: |
+        cd /tmp
+        uvx cookiecutter $GITHUB_WORKSPACE --no-input
 
-    - name: Run check
-      run: make check
+    - name: Verify generated project structure
+      run: |
+        cd /tmp/example-project
+        test -f pyproject.toml
+        test -f README.md
+        test -f Makefile
+        test -d tests
+        test -d .github
 
-    - name: Run distcheck
-      run: make distcheck
+    - name: Test generated project setup
+      run: |
+        cd /tmp/example-project
+        uv sync
+
+    - name: Test generated project functionality
+      run: |
+        cd /tmp/example-project
+        uv run python -m pytest tests --cov --cov-config=pyproject.toml --cov-report=xml
+
+    - name: Test generated project linting
+      run: |
+        cd /tmp/example-project
+        uv run ruff check .
