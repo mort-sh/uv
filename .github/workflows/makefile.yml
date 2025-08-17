@@ -9,7 +9,7 @@ on:
 jobs:
   test-cookiecutter:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Check out
       uses: actions/checkout@v4
@@ -21,7 +21,7 @@ jobs:
       run: |
         cd /tmp
         uvx cookiecutter $GITHUB_WORKSPACE --no-input
-        
+
     - name: Verify generated project structure
       run: |
         cd /tmp/example-project
@@ -30,17 +30,17 @@ jobs:
         test -f Makefile
         test -d tests
         test -d .github
-        
+
     - name: Test generated project setup
       run: |
         cd /tmp/example-project
         uv sync
-        
+
     - name: Test generated project functionality
       run: |
         cd /tmp/example-project
         uv run python -m pytest tests --cov --cov-config=pyproject.toml --cov-report=xml
-        
+
     - name: Test generated project linting
       run: |
         cd /tmp/example-project
